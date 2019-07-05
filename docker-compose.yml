@@ -1,0 +1,134 @@
+version: '3'
+services:
+
+  Douqi_GM_JS:
+    container_name: Douqi_GM_JS
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8003:80"
+    volumes:
+      - ./app/Douqi_GM_Js/:/var/www/html
+      - ./app/Douqi_GM_Js/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./app/Douqi_GM_Js/cron.d/:/etc/cron.d/
+    restart: always
+    networks:
+      - default
+
+  Douqi_GM_JS_Api:
+    container_name: Douqi_GM_JS_Api
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8004:80"
+    volumes:
+      - ./app/Douqi_GM_JS_Api/:/var/www/html
+      - ./app/Douqi_GM_JS_Api/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    restart: always
+    networks:
+      - default
+
+  GM_Backend:
+    container_name: GM_Backend
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8005:80"
+    volumes:
+      - ./app/GM_Backend/:/var/www/html
+      - ./app/GM_Backend/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./app/GM_Backend/cron.d/:/etc/cron.d/
+    restart: always
+    networks:
+      - default
+
+  Xiaoyy_GM_JS:
+    container_name: Xiaoyy_GM_JS
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8006:80"
+    volumes:
+      - ./app/Xiaoyy_GM_JS/:/var/www/html
+      - ./app/Xiaoyy_GM_JS/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./app/Xiaoyy_GM_JS/cron.d/:/etc/cron.d/
+    restart: always
+    networks:
+      - default
+
+  Xiaoyy_GM_JS_Api:
+    container_name: Xiaoyy_GM_JS_Api
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8007:80"
+    volumes:
+      - ./app/Xiaoyy_GM_JS_Api/:/var/www/html
+      - ./app/Xiaoyy_GM_JS_Api/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    restart: always
+    networks:
+      - default
+
+  Finance:
+    container_name: Finance
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8008:80"
+    volumes:
+      - ./app/Finance/:/var/www/html
+      - ./app/Finance/cron.d/:/etc/cron.d/
+      - ./app/Finance/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    restart: always
+    networks:
+      - default
+
+  Douqi_League:
+    container_name: Douqi_League
+    image: registry.cn-hangzhou.aliyuncs.com/kaayou_web/php-apache:1.0
+    ports:
+      - "8010:80"
+    volumes:
+      - ./app/Douqi_League/:/var/www/html
+      - ./app/Douqi_League/envconf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    restart: always
+    networks:
+      - default
+
+  mysql57:
+    container_name: mysql57
+    image: mysql:5.7.24
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./mysql57/conf.d/:/etc/mysql/conf.d/"
+      - "./mysql57/data:/var/lib/mysql/"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1122334
+    restart: always
+    networks:
+      - default
+      
+  Douqi_redis:
+    container_name: douqi_redis
+    image: redis:alpine
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    ports:
+      - "6380:6379"
+    volumes:
+      - "./redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "./redis/data/:/data/"
+    restart: always
+    networks:
+      - default
+
+  Xiaoyy_redis:
+    container_name: Xiaoyy_redis
+    image: redis:alpine
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "./redis/data/:/data/"
+    restart: always
+    networks:
+      - default
+      
+networks:
+  default:
+
